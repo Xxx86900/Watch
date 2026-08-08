@@ -1,0 +1,34 @@
+# CMake构建目录
+build/
+cmake-build-*/
+Debug/
+Release/
+CMakeFiles/
+CMakeCache.txt
+
+# 编译生成文件
+*.o
+*.obj
+*.d
+*.su
+*.elf
+*.axf
+*.map
+*.hex
+*.bin
+*.lst
+
+# Keil构建及个人配置
+Objects/
+Listings/
+*.uvguix.*
+*.uvoptx
+*.dep
+
+# 编辑器配置
+.idea/
+.vscode/
+
+# 系统文件
+.DS_Store
+Thumbs.db
