@@ -46,12 +46,24 @@ target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
 target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user sources here
     Watch/Bsp/board.c
+    Watch/UI/ui_canvas.c
+    Watch/UI/ui_manager.c
+    Watch/UI/screen_home.c
+    Watch/UI/screen_menu.c
+    Watch/UI/screen_motion.c
+    Watch/UI/screen_level.c
+    Watch/UI/screen_stopwatch.c
+    Watch/UI/screen_flashlight.c
+    Watch/UI/screen_settings.c
+    Watch/Assets/fonts.c
 )
 
 # Add include paths
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user defined include paths
     Watch/Bsp
+    Watch/UI
+    Watch/Assets
 )
 
 # Add project symbols (macros)
