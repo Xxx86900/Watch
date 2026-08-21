@@ -32,3 +32,6 @@ Listings/
 # 系统文件
 .DS_Store
 Thumbs.db
+
+# 其它
+资料/
