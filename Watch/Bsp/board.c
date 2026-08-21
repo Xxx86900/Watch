@@ -2,12 +2,18 @@
 
 #include "main.h"
 
+/**
+ * @brief 初始化开发板硬件配置
+ * @note 该函数用于执行开发板的初始化设置，包括电源控制和外设配置
+ */
 void board_init(void)
 {
     /* PB13 是高电平有效的硬件电源锁存控制引脚。 */
     HAL_GPIO_WritePin(PWR_HOLD_GPIO_Port, PWR_HOLD_Pin, GPIO_PIN_SET);
 
+    /* 关闭手电筒功能 */
     board_flashlight_set(false);
+    /* 禁用电池检测功能 */
     board_battery_sense_enable(false);
 }
 
