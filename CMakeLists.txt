@@ -44,14 +44,41 @@ target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
 
 # Add sources to executable
 target_sources(${CMAKE_PROJECT_NAME} PRIVATE
-    # Add user sources here
+
+    # BSP
     Watch/Bsp/board.c
-)
+
+
+    # Components
+    Watch/Components/mpu6050.c
+    Watch/Components/oled.c
+
+
+    # Services
+    Watch/Services/battery_service.c
+    Watch/Services/clock_service.c
+    Watch/Services/input_service.c
+    Watch/Services/motion_service.c
+
+
+    # Application
+    Watch/App/watch_app.c
+)   
 
 # Add include paths
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
-    # Add user defined include paths
+
     Watch/Bsp
+
+    Watch/Components
+
+    Watch/Services
+
+    Watch/App
+
+    Watch/UI
+
+    Watch/Assets
 )
 
 # Add project symbols (macros)
