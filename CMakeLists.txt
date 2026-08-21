@@ -48,6 +48,7 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     # BSP
     Watch/Bsp/board.c
     Watch/Bsp/bsp_adc.c
+    Watch/Bsp/bsp_rtc.c
 
 
     # Components
