@@ -14,7 +14,7 @@ void ui_manager_init(void)
 
 void ui_manager_set_screen(ui_screen_t screen)
 {
-  if ((screen >= UI_SCREEN_HOME) && (screen < UI_SCREEN_COUNT))
+  if (screen < UI_SCREEN_COUNT)
   {
     s_current_screen = screen;
   }

@@ -2,6 +2,20 @@
 
 #include "main.h"
 
+void board_power_hold_early(void)
+{
+    GPIO_InitTypeDef gpio = {0};
+
+    __HAL_RCC_GPIOB_CLK_ENABLE();
+    HAL_GPIO_WritePin(PWR_HOLD_GPIO_Port, PWR_HOLD_Pin, GPIO_PIN_SET);
+
+    gpio.Pin = PWR_HOLD_Pin;
+    gpio.Mode = GPIO_MODE_OUTPUT_PP;
+    gpio.Pull = GPIO_NOPULL;
+    gpio.Speed = GPIO_SPEED_FREQ_LOW;
+    HAL_GPIO_Init(PWR_HOLD_GPIO_Port, &gpio);
+}
+
 void board_init(void)
 {
     /* PB13 是高电平有效的硬件电源锁存控制引脚。 */

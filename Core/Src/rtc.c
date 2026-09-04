@@ -22,6 +22,12 @@
 
 /* USER CODE BEGIN 0 */
 
+#define WATCH_RTC_BACKUP_MAGIC 0xA55AU
+#define WATCH_RTC_PACK_DATE(year,month,day) \
+  ((((uint32_t)(year) & 0x7FU) << 9U) | \
+   (((uint32_t)(month) & 0x0FU) << 5U) | ((uint32_t)(day) & 0x1FU))
+#define WATCH_RTC_DEFAULT_DATE WATCH_RTC_PACK_DATE(26U,1U,1U)
+
 /* USER CODE END 0 */
 
 RTC_HandleTypeDef hrtc;
@@ -53,6 +59,9 @@ void MX_RTC_Init(void)
 
   /* USER CODE BEGIN Check_RTC_BKUP */
 
+  if (HAL_RTCEx_BKUPRead(&hrtc,RTC_BKP_DR1) != WATCH_RTC_BACKUP_MAGIC)
+  {
+
   /* USER CODE END Check_RTC_BKUP */
 
   /** Initialize RTC and set the Time and Date
@@ -75,6 +84,38 @@ void MX_RTC_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN RTC_Init 2 */
+
+    DateToUpdate.Year = 26U;
+    DateToUpdate.Month = 1U;
+    DateToUpdate.Date = 1U;
+    if (HAL_RTC_SetDate(&hrtc,&DateToUpdate,RTC_FORMAT_BIN) != HAL_OK)
+    {
+      Error_Handler();
+    }
+    HAL_RTCEx_BKUPWrite(&hrtc,RTC_BKP_DR1,WATCH_RTC_BACKUP_MAGIC);
+    HAL_RTCEx_BKUPWrite(&hrtc,RTC_BKP_DR2,WATCH_RTC_DEFAULT_DATE);
+  }
+  else
+  {
+    uint32_t packed_date = HAL_RTCEx_BKUPRead(&hrtc,RTC_BKP_DR2);
+
+    DateToUpdate.Year = (uint8_t)((packed_date >> 9U) & 0x7FU);
+    DateToUpdate.Month = (uint8_t)((packed_date >> 5U) & 0x0FU);
+    DateToUpdate.Date = (uint8_t)(packed_date & 0x1FU);
+    if ((DateToUpdate.Year > 99U) ||
+        (DateToUpdate.Month < 1U) || (DateToUpdate.Month > 12U) ||
+        (DateToUpdate.Date < 1U) || (DateToUpdate.Date > 31U))
+    {
+      DateToUpdate.Year = 26U;
+      DateToUpdate.Month = 1U;
+      DateToUpdate.Date = 1U;
+      HAL_RTCEx_BKUPWrite(&hrtc,RTC_BKP_DR2,WATCH_RTC_DEFAULT_DATE);
+    }
+    if (HAL_RTC_SetDate(&hrtc,&DateToUpdate,RTC_FORMAT_BIN) != HAL_OK)
+    {
+      Error_Handler();
+    }
+  }
 
   /* USER CODE END RTC_Init 2 */
 

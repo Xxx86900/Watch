@@ -26,6 +26,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "board.h"
+#include "watch_app.h"
 
 /* USER CODE END Includes */
 
@@ -78,6 +79,7 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
+  board_power_hold_early();
 
   /* USER CODE END Init */
 
@@ -96,6 +98,7 @@ int main(void)
   MX_RTC_Init();
   /* USER CODE BEGIN 2 */
   board_init();
+  watch_app_init();
 
   /* USER CODE END 2 */
 
@@ -106,6 +109,8 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+    watch_app_process();
+    __WFI();
   }
   /* USER CODE END 3 */
 }

@@ -22,6 +22,13 @@ typedef enum
 } board_key_t;
 
 /**
+ * @brief 在系统时钟初始化前尽早锁定硬件电源。
+ *
+ * HAL_Init() 完成后立即调用，避免等待 LSE 起振期间松开开机键导致掉电。
+ */
+void board_power_hold_early(void);
+
+/**
  * @brief 将板级控制的所有输出设置为安全的启动状态。
  *
  * 调用本函数前必须先调用 MX_GPIO_Init()。
